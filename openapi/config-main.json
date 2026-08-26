@@ -6,5 +6,5 @@
   "banner": "This documentation targets the production Catalog API.",
   "openapi_output": "openapi/catalog-main.openapi.json",
   "site_name": "IGVF Catalog (Production)",
-  "pages_base_path": "/main"
+  "pages_base_path": "/igvf-catalog-docs/main"
 }

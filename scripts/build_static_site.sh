@@ -9,21 +9,16 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 case "$VARIANT" in
-  dev)
-    CONFIG="openapi/config-dev.json"
-    SPEC="openapi/catalog-dev.openapi.json"
-    BASE="/dev"
-    ;;
-  main)
-    CONFIG="openapi/config-main.json"
-    SPEC="openapi/catalog-main.openapi.json"
-    BASE="/main"
-    ;;
+  dev) CONFIG="openapi/config-dev.json" ;;
+  main) CONFIG="openapi/config-main.json" ;;
   *)
     echo "unknown variant: $VARIANT (expected dev or main)" >&2
     exit 1
     ;;
 esac
+
+SPEC="$(python3 -c "import json; print(json.load(open('$CONFIG'))['openapi_output'])")"
+BASE="$(python3 -c "import json; print(json.load(open('$CONFIG'))['pages_base_path'])")"
 
 python3 scripts/prepare_docs_variant.py "$VARIANT"
 python3 scripts/fetch_openapi.py --config "$CONFIG" --output "$SPEC"
